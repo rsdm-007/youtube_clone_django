@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Channel Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.channel-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.channel-banner img {
+    width: 100%;
+    height: auto;
+}
+
+.channel-info {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.channel-profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.channel-details h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.channel-details p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.subscribe-button {
+    margin-left: auto;
+    padding: 10px 20px;
+    background-color: #cc0000;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.subscribe-button:hover {
+    background-color: #e60000;
+}
+
+.channel-nav {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.channel-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.channel-nav ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.channel-nav ul li a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.channel-nav ul li a:hover {
+    background-color: #f1f1f1;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.video-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.video-card img {
+    width: 100%;
+    height: auto;
+}
+
+.video-card h3 {
+    margin: 10px;
+    font-size: 18px;
+}
+
+.video-card p {
+    margin: 10px;
+    color: #666;
+}
+
+    </style>
+</head>
+<body>
+    <div class="channel-container">
+        <!-- Channel Banner -->
+        <div class="channel-banner">
+            <img src="path/to/banner.jpg" alt="Channel Banner">
+        </div>
+
+        <!-- Channel Info -->
+        <div class="channel-info">
+            <div class="channel-profile">
+                <img src="path/to/profile.jpg" alt="Profile Picture">
+            </div>
+            <div class="channel-details">
+                <h1>Channel Name</h1>
+                <p>123K subscribers</p>
+            </div>
+            <button class="subscribe-button">Subscribe</button>
+        </div>
+
+        <!-- Channel Navigation -->
+        <div class="channel-nav">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Videos</a></li>
+                <li><a href="#">Playlists</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Channels</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="video-grid">
+            <div class="video-card">
+                <img src="path/to/video-thumbnail.jpg" alt="Video Thumbnail">
+                <h3>Video Title</h3>
+                <p>Views • Time Ago</p>
+            </div>
+            <!-- Repeat video-card for more videos -->
+        </div>
+    </div>
+</body>
+</html>

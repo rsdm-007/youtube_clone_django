@@ -1,0 +1,313 @@
+{% extends 'index.html'%}
+{% block container%}
+{% load static %}
+{% csrf_token %} 
+
+    <style>/* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        /*
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }*/
+        
+        header {
+            background-color: #FF0000;
+            color: #FFF;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .header-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 24px;
+        }
+        
+        button {
+            background-color: #FF0000;
+            color: #FFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #DD0000;
+        }
+        
+        .tabs {
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+        
+        .tabs button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+        
+        .tabs button:hover {
+            background-color: #ddd;
+        }
+        
+        .tabs button.active {
+            background-color: #ccc;
+        }
+        
+        .tabcontent {
+            display: none;
+            padding: 20px 20px;
+            border-top: none;
+            animation: fadeEffect 0.5s;
+            color: #ccc;
+        }
+        
+        /* Fade in tabs */
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #F5F5F5;
+        }
+        .container .header-content{
+    background: rgb(46,46,46);
+    padding-left: 17%;
+    padding-right: 2%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.container .tabs{
+    background: rgb(46,46,46);
+    padding-left: 17%;
+    padding-right: 2%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.container .tabcontent{
+    background: rgb(46,46,46);
+    padding-left: 17%;
+    padding-right: 2%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display:flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.tablink').click(); // Open the first tab by default
+});
+
+function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablink" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+        </script>
+    <div class="container" style="margin: 50px;">
+    
+        <div class="header-content">
+            <img src="{{channel.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;">
+            {%if flag%}
+                <a href="../subcribe/?acc_id={{channel.id_user}}" style="margin-left: 6px; color:black; background-color: white; padding-top: 5px; height: 30px; margin-top: 5px; width: 100px;padding-left: 20px; border-radius: 15px;">Subscribe</a>
+                {%else%}
+                <a href="../subcribe/?acc_id={{channel.id_user}}" style="margin-left: 6px; color:rgb(255, 255, 255); background-color: rgb(60, 60, 60); padding-top: 5px; height: 30px; margin-top: 5px; width: 100px;padding-left: 20px; border-radius: 15px;">Subscribed</a>
+                {%endif%}
+        </div>
+    </div>
+    
+    
+        <div class="tabs">
+            <button class="tablink" onclick="openTab(event, 'Home')">Home</button>
+            <button class="tablink" onclick="openTab(event, 'Videos')">Videos</button>
+            <button class="tablink" onclick="openTab(event, 'Shorts')">Shorts</button>
+            <button class="tablink" onclick="openTab(event, 'Live')">Live</button>
+            <button class="tablink" onclick="openTab(event, 'Playlist')">Playlist</button>
+            <button class="tablink" onclick="openTab(event, 'Community')">Community</button>
+        </div>
+
+        <div id="Home" class="tabcontent" sty>
+            <div class="container">
+                {%if posts%}
+                {%for i in posts%}
+                    <div class="video-item" >
+                        <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+                        {% load static %}
+                        <div class="video-info" style="display: flex;">
+                            <a><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                            <div style="padding-left: 10px;">
+                                <p class="video-description">{{i.des}}</p>
+                                <a href="" style="color: gray;">{{i.user.user.username}}</a>
+                                <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                                <p>{{i.date}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="Videos" class="tabcontent">
+            <div class="container">
+                {%if posts%}
+                {%for i in posts%}
+                    <div class="video-item" >
+                        <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+                        {% load static %}
+                        <div class="video-info" style="display: flex;">
+                            <a><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                            <div style="padding-left: 10px;">
+                                <p class="video-description">{{i.des}}</p>
+                                <a href="" style="color: gray;">{{i.user.user.username}}</a>
+                                <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                                <p>{{i.date}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="Shorts" class="tabcontent">
+            <div class="container">
+                {%if posts%}
+                {%for i in posts%}
+                    <div class="video-item" >
+                        <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+                        {% load static %}
+                        <div class="video-info" style="display: flex;">
+                            <a><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                            <div style="padding-left: 10px;">
+                                <p class="video-description">{{i.des}}</p>
+                                <a href="" style="color: gray;">{{i.user.user.username}}</a>
+                                <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                                <p>{{i.date}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="Live" class="tabcontent">
+            <div class="container">
+                {%if posts%}
+                {%for i in posts%}
+                    <div class="video-item" >
+                        <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+                        {% load static %}
+                        <div class="video-info" style="display: flex;">
+                            <a><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                            <div style="padding-left: 10px;">
+                                <p class="video-description">{{i.des}}</p>
+                                <a href="" style="color: gray;">{{i.user.user.username}}</a>
+                                <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                                <p>{{i.date}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="Playlist" class="tabcontent">
+            <div class="container">
+                {%if posts%}
+                {%for i in posts%}
+                    <div class="video-item" >
+                        <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+                        {% load static %}
+                        <div class="video-info" style="display: flex;">
+                            <a><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                            <div style="padding-left: 10px;">
+                                <p class="video-description">{{i.des}}</p>
+                                <a href="" style="color: gray;">{{i.user.user.username}}</a>
+                                <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                                <p>{{i.date}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="Community" class="tabcontent">
+            <div class="container">
+                {%if posts%}
+                {%for i in posts%}
+                    <div class="video-item" >
+                        <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+                        {% load static %}
+                        <div class="video-info" style="display: flex;">
+                            <a><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                            <div style="padding-left: 10px;">
+                                <p class="video-description">{{i.des}}</p>
+                                <a href="" style="color: gray;">{{i.user.user.username}}</a>
+                                <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                                <p>{{i.date}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    
+
+   
+
+    <script src="scripts.js"></script>
+    </div>
+    {% endblock %}

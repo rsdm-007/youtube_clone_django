@@ -1,0 +1,26 @@
+{% extends 'index.html'%}
+{% block container%}
+{% load static %}
+{% csrf_token %} 
+<div class="container">
+    {%if posts%}
+    {%for i in posts%}
+    
+        <div class="video-item" >
+            <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+            {% load static %}
+            <div class="video-info" style="display: flex;">
+                <a href="../@{{i.user.user.username}}"><img src="{{i.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+                <div style="padding-left: 10px;">
+                    <p class="video-description">{{i.des}}</p>
+                    <a href="../@{{i.user.user.username}}" style="color: gray;">{{i.user.user.username}}</a>
+                    <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                    <p>{{i.date}}</p>
+                </div>
+            </div>
+        </a>
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Channel</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>/* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #FF0000;
+            color: #FFF;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .header-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 24px;
+        }
+        
+        button {
+            background-color: #FF0000;
+            color: #FFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #DD0000;
+        }
+        
+        .tabs {
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+        
+        .tabs button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+        
+        .tabs button:hover {
+            background-color: #ddd;
+        }
+        
+        .tabs button.active {
+            background-color: #ccc;
+        }
+        
+        .tabcontent {
+            display: none;
+            padding: 20px 20px;
+            border-top: none;
+            animation: fadeEffect 0.5s;
+        }
+        
+        /* Fade in tabs */
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #F5F5F5;
+        }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.tablink').click(); // Open the first tab by default
+});
+
+function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablink" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+        </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Channel Name</h1>
+            <p>Description of the channel</p>
+            <button>Subscribe</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tablink" onclick="openTab(event, 'Home')">Home</button>
+            <button class="tablink" onclick="openTab(event, 'Videos')">Videos</button>
+            <button class="tablink" onclick="openTab(event, 'Shorts')">Shorts</button>
+            <button class="tablink" onclick="openTab(event, 'Live')">Live</button>
+            <button class="tablink" onclick="openTab(event, 'Playlist')">Playlist</button>
+            <button class="tablink" onclick="openTab(event, 'Community')">Community</button>
+        </div>
+
+        <div id="Home" class="tabcontent">
+            <h2>Home</h2>
+            <p>Welcome to the Home tab.</p>
+        </div>
+        <div id="Videos" class="tabcontent">
+            <h2>Videos</h2>
+            <p>Welcome to the Videos tab.</p>
+        </div>
+        <div id="Shorts" class="tabcontent">
+            <h2>Shorts</h2>
+            <p>Welcome to the Shorts tab.</p>
+        </div>
+        <div id="Live" class="tabcontent">
+            <h2>Live</h2>
+            <p>Welcome to the Live tab.</p>
+        </div>
+        <div id="Playlist" class="tabcontent">
+            <h2>Playlist</h2>
+            <p>Welcome to the Playlist tab.</p>
+        </div>
+        <div id="Community" class="tabcontent">
+            <h2>Community</h2>
+            <p>Welcome to the Community tab.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 YouTube</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

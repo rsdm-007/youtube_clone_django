@@ -1,0 +1,89 @@
+{% extends 'header.html'%}
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body >
+    {% load static %}
+    <nav class="flex-div">
+        <div class="left-nav flex-div">
+            <img  class="menu-icon" src="{%static 'images/menu.png'%}" alt="sorry">
+            <a href="index.html"><img  class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
+        </div>
+
+        <div class="middle-nav flex-div">
+            <div class="search-box flex-div">
+                <form  class="search_form" action="../search/" method="GET">
+                    {% csrf_token %}
+                    <input type="text" name="SearchInput" placeholder="search" >
+                    <input type="image"  class="seach-bar" src="{%static 'images/search.png'%}" style="height:20px; width: 20px;" alt="">
+                </form>
+            </div>
+            <img  class="mic-icon" src="{%static 'images/voice-search.png' %}" alt="">
+            
+        </div>
+
+        <div class="right-nav flex-div">
+            <a href="../upload/"><img  src="{% static 'images/upload.png' %}" alt=""></a>
+            <img src="{% static 'images/more.png' %}" alt="">
+            <img  src="{% static 'images/notification.png' %}" alt="" title="notify">
+            <img class="user-icon" src={{user1.dp.url}} alt="" title={{user1.user.username}}>
+        </div>
+    </nav>-->
+    {% block content%}
+    <!----------Side bar---------->
+
+    <div class="side-bar" style="background-color: black;">
+        <div class="shorcut-links">
+            <a href=""><img src="{% static 'images/home.png' %}"><p>home</p></a>
+            <a href=""><img src="{% static 'images/explore.png' %}"><p>Explore</p></a>
+            <a href=""><img src="{% static 'images/subscriprion.png'%}"><p>Subscription</p></a>
+            <a href=""><img src="{% static 'images/library.png' %}"><p>Library</p></a>
+            <a href=""><img src="{% static 'images/history.pn' %}g"><p>Histroy</p></a>
+            <a href=""><img src="{% static 'images/playlist.png' %}"><p>Playlist</p></a>
+            <a href=""><img src="{% static 'images/messages.png' %}"><p>Message</p></a>
+            <a href=""><img src="{% static 'images/show-more.png' %}"><p>Show more</p></a>
+            <hr>
+        </div>
+        <div class="subscribed-list">
+            <h3 style="color: white;">SUBSCRIBED</h3>
+            <a href=""><img src="{% static 'images/simon.png' %}"><p>Simon</p></a>
+            <a href=""><img src="{% static 'images/Jack.png' %}"><p>Jack</p></a>
+            <a href=""><img src="{% static 'images/tom.png' %}"><p>Tom</p></a>
+            
+        </div>
+    </div>
+
+
+<!---------Main---------->
+{% block container %}
+{% endblock %}
+<!--<div class="container">
+    {%for i in posts%}
+    <a href="link-to-video">
+        <div class="video-item" >
+            <img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" >
+            <div class="video-info">
+            <p class="video-description">{{i.des}}</p>
+        
+            </div>
+            <a href="" style="color: gray;">{{i.user}}</a>
+            <p style="color: gray;">{{i.views}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>-->
+
+<!-- End of video item -->
+
+
+    <script src="{%static 'script1.js'%}"></script>
+    {% endblock %}
+<!--</body>
+</html>-->

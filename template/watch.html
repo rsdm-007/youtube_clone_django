@@ -1,0 +1,218 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+<style>
+.comment-section {
+    max-width: 700px;
+    background-color: #000000;
+    padding: 1px;
+    border-radius: 5px;
+    height: 60px;
+}
+
+.comment-box {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-input {
+    width: 75%;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #535353;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: none;
+    height: 50px;
+    box-sizing: border-box;
+    background: #000000;
+    color: white;
+}
+
+#comment-input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.comment-actions button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.comment-actions button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#cancel-btn {
+    background-color: transparent;
+    color: #007BFF;
+}
+
+#cancel-btn:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const commentInput = document.getElementById('comment-input');
+        const commentBtn = document.getElementById('comment-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+
+        // Enable/disable comment button based on input
+        commentInput.addEventListener('input', function() {
+            if (commentInput.value.trim() !== '') {
+                commentBtn.disabled = false;
+            } else {
+                commentBtn.disabled = true;
+            }
+        });
+
+        // Clear the input field and disable comment button on cancel
+        cancelBtn.addEventListener('click', function() {
+            commentInput.value = '';
+            commentBtn.disabled = true;
+        });
+
+        // Handle comment button click
+        commentBtn.addEventListener('click', function() {
+            const commentText = commentInput.value.trim();
+            if (commentText !== '') {
+                // Call the comment URL using fetch
+                fetch('../comment/?acc_id={{post.id}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token for Django
+                    },
+                    body: JSON.stringify({ comment: commentText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Handle success (e.g., update the comment section)
+                        alert('Comment submitted successfully!'+data.message);
+                    } else {
+                        // Handle failure
+                        alert('Failed to submit comment.'+data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+                commentInput.value = '';
+                commentBtn.disabled = true;
+            }
+        });
+    });
+</script>
+<div style="background-color: black; display: flex;">
+    <div style="width: 950px; height: 500px;padding-left: 6%; padding-top: 2%;">
+        <img src="{{post.thumb.url}}" alt="" class="watch" style="width: 850px; height: 500px; border-radius: 9px;">
+        <p style="color: white; font-family: sans-serif; font-size: large;">{{post.des}}</p>
+        <div style="display: flex; padding-top: 15px; padding-bottom: 15px;">
+            <a href="../@{{post.user.user.username}}"><img src="{{post.user.dp.url}}" alt="" style="height: 45px; width: 45px; border-radius: 80px;"></a>
+            <div style="padding-left: 10px;">
+                <a href="../@{{post.user.user.username}}" style="color: white; font-family: sans-serif; font-size: large;">{{post.user.user.username}}</a>
+                <p style="color: white; font-family: sans-serif; font-size: large;">{{post.user.subscribers}} Subscribers</p>
+            </div>
+            {% if flag %}
+            <a href="../subscribe/?acc_id={{post.user.id_user}}" style="margin-left: 6px; color:black; background-color: white; padding-top: 5px; height: 30px; margin-top: 5px; width: 100px;padding-left: 20px; border-radius: 15px;">Subscribe</a>
+            {% else %}
+            <a href="../subscribe/?acc_id={{post.user.id_user}}" style="margin-left: 6px; color:white; background-color: rgb(60, 60, 60); padding-top: 5px; height: 30px; margin-top: 5px; width: 100px;padding-left: 20px; border-radius: 15px;">Subscribed</a>
+            {% endif %}
+            <div style=" display: flex;margin-left: 150px; width: 110px; height: 30px; padding-bottom: 5px; border-radius: 14px; padding-top: 5px; background-color: rgb(38, 37, 37);">
+                <a href="../like/?acc_id={{post.id}}" style="display: flex;">
+                    <img src="{% static 'images/like.png' %}" alt="" style="height: auto; margin-left: 15px;">
+                    <p style="color: white; font-family: sans-serif; font-size: medium; padding-left: 4px; padding-top: 2px;">{{post.likes}}</p>
+                </a>
+                <a href="" style="display: flex;">
+                    <img src="{% static 'images/dislike.png' %}" alt="" style="height: auto; margin-left: 15px; border-left: 2px solid white; padding-left: 10px;">
+                </a>
+            </div>
+            <div style=" display: flex;margin-left: 10px; width: 80px; height: 30px; padding-bottom: 5px; border-radius: 14px; padding-top: 5px; background-color: rgb(38, 37, 37);">
+                <a href="" style="display: flex;">
+                    <img src="{% static 'images/share.png' %}" alt="" style="height: auto; margin-left: 5px;">
+                    <p style="color: white; font-family: sans-serif; font-size: medium; padding-left: 4px; padding-top: 2px;">Share</p>
+                </a>
+            </div>
+            <div style=" display: flex;margin-left: 10px; width: 110px; height: 30px; padding-bottom: 5px; border-radius: 14px; padding-top: 5px; background-color: rgb(38, 37, 37);">
+                <a href="" style="display: flex;">
+                    <img src="{% static 'images/share.png' %}" alt="" style="height: auto; margin-left: 5px;">
+                    <p style="color: white; font-family: sans-serif; font-size: medium; padding-left: 4px; padding-top: 2px; padding-right: 5px;">Download</p>
+                </a>
+            </div>
+            <div style=" display: flex;margin-left: 10px; width: 30px; height: 30px;; border-radius: 14px; padding-top: 5px; background-color: rgb(38, 37, 37);">
+                <a href="" style="display: flex;">
+                    <p style="color: white; font-family: sans-serif; font-size: medium; padding-left: 8px;">...</p>
+                </a>
+            </div>
+        </div>
+        <div style="padding-left: 20px; white-space: pre-line;background: rgb(46,46,46);color: white; border-radius: 20px; display:flex;">
+            <p>{{post.views}} views {{post.datdif}}
+                {{post.des}}
+            </p>
+        </div>
+        <div style="color: white; white-space: pre-line;  display:flex;flex-wrap: wrap;" >
+            <p>2,954 Comments</p>
+        </div>
+        <div class="comment-section" style="white-space: pre-line; display: flex;">
+            <img class="user-icon" src="{{user1.dp.url}}" alt="" title="{{user1.user.username}}">
+            <textarea id="comment-input" placeholder="Add a public comment..."></textarea>
+            <div class="comment-actions">
+                <button id="cancel-btn">Cancel</button>
+                <button id="comment-btn" disabled>Comment</button>
+            </div>
+        </div>
+        {%if posts%}
+        {%for i in comments%}
+        <div class="comment-section" style="white-space: pre-line; display: flex;">
+            <div style="white-space: pre-line; display: flex; ">
+                <img class="user-icon" src="{{i.user.dp.url}}" alt="" title="{{user1.user.username}}">
+             </div>
+            <div>
+                <p style="color: white; padding-left: 15px;">{{i.user.user.username}}</p>
+                <p style="color: white;">{{i.comments}}</p>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div>
+            
+        </div>
+        </div>
+        <div style="margin-left: 10px; margin-top: 125px;">
+        {%if posts%}
+        {%for i in posts%}
+        <a href="link-to-video">
+            <div class="video-item" style="display: flex;">
+                <a href="../watch?watch={{i.id}}"><img src="{{i.thumb.url}}" alt="Video Thumbnail" class="video-thumbnail" style="height: 100px; width: 200px;"></a>
+                {% load static %}
+                <div class="video-info" style="display: flex;">
+                    <div style="padding-left: 10px;">
+                        <p class="video-description">{{i.title}}</p>
+                        <a href="" style="color: gray;" title="{{i.user.user.username}}">{{i.user.user.username}}</a>
+                        <p style="color: gray;">{{i.views}} views.{{i.datdif}} ago</p>
+                        <p>{{i.date}}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+<!--</body>
+</html>-->

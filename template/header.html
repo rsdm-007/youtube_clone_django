@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body style="background-color: black;" >
+    {% load static %}
+    <nav class="flex-div" style="background-color: black;">
+        <div class="left-nav flex-div">
+            <img  class="menu-icon" src="{%static 'images/menu.png'%}" alt="sorry">
+            <a href="../home/"><img  class="logo" src="{% static 'images/logo.png' %}" alt="" style="background-color: white;color: white;"></a>
+        </div>
+
+        <div class="middle-nav flex-div">
+            <div class="search-box flex-div">
+                <form  class="search_form" action="../search/" method="GET">
+                    {% csrf_token %}
+                <input type="text" name="SearchInput" placeholder="search" style="color: white; background-color: black; margin: 0px;">
+                    <input type="image"  class="seach-bar" src="{%static 'images/search.png'%}" style="height:20px; width: 20px;" alt="">
+                </form>
+            </div>
+            <img  class="mic-icon" src="{%static 'images/voice-search.png' %}" alt="">
+            
+        </div>
+
+        <div class="right-nav flex-div">
+            <a href="../upload/"><img  src="{% static 'images/upload.png' %}" alt=""></a>
+            <img src="{% static 'images/more.png' %}" alt="">
+            <img  src="{% static 'images/notification.png' %}" alt="" title="notify">
+            <img class="user-icon" src={{user1.dp.url}} alt="" title={{user1.user.username}}>
+        </div>
+    </nav>
+    {% block content %}
+    {% load static %}
+    {% endblock %}
+</body>
+</html>
